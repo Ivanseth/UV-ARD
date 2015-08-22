@@ -1,3 +1,4 @@
+#include <UVIndexData.h>
 #include <UVsensor.h>
 #include <LiquidCrystal.h>
 
@@ -12,7 +13,7 @@ const int REF_3v3 = A1;	//3.3V power on the arduino
 const int pushButton = 2;
 
 UVsensor UVsensor(UVOUT, REF_3v3);
-
+UVIndexData uvData;
 
 
 void setup() {
@@ -38,6 +39,15 @@ void loop() {
     lcd.print("UVIten.: ");
     lcd.setCursor(9,1);
     lcd.print(uvValue);
+
+    char* testChar;
+
+    testChar = uvData.getMinutes(uvValue);
+
+    for(int i = 0; i < 6; i++){
+        Serial.print(testChar[i]);
+    }
+    Serial.println();
 
     collectUVData(); 
 
@@ -115,6 +125,16 @@ void displayFinalUVItensety(float uvItensity){
 
 
 }
+
+void displayFinalMSD(float msd){
+
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("MSD: ");
+        lcd.setCursor(6,0);
+        lcd.print(msd);
+}
+
 
 //Sett i egen klasse
 void displayCountdownInSec(int startSec, int remianingSec){

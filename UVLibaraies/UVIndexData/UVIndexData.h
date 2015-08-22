@@ -6,9 +6,8 @@
 
 class UVIndexData{
 	public:
-		UVIndex();
-		void getMinutes(float uvValue);
-
+		UVIndexData();
+		char* getMinutes(float uvValue);
 };
 
 #endif
