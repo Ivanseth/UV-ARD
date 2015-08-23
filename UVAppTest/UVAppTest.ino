@@ -38,16 +38,7 @@ void loop() {
     lcd.setCursor(0,1);
     lcd.print("UVIten.: ");
     lcd.setCursor(9,1);
-    lcd.print(uvValue);
-
-    char* testChar;
-
-    testChar = uvData.getMinutes(uvValue);
-
-    for(int i = 0; i < 6; i++){
-        Serial.print(testChar[i]);
-    }
-    Serial.println();
+    lcd.print(uvValue); 
 
     collectUVData(); 
 
@@ -117,13 +108,18 @@ void displayCalculatingToDisplay(){
 //Sett I egen klasse
 void displayFinalUVItensety(float uvItensity){
 
-        lcd.clear();
-        lcd.setCursor(0,0);
-        lcd.print("Value: ");
-        lcd.setCursor(6,0);
-        lcd.print(uvItensity);
+    lcd.clear();
 
+    lcd.setCursor(0,0);
+    lcd.print("Value: ");
+    lcd.setCursor(6,0);
 
+    char* testChar;
+    testChar = uvData.getMinutes(1);
+    
+    //for(int i = 0; i < 6; i++){
+      lcd.print(testChar);///får ikke overfør hele stringen
+    //}
 }
 
 void displayFinalMSD(float msd){
@@ -147,6 +143,7 @@ void displayCountdownInSec(int startSec, int remianingSec){
   lcd.print(startSec-remianingSec);
 
 }
+
 
 
 

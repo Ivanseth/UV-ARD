@@ -56,7 +56,7 @@ char* UVIndexData::getMinutes(float uvValue){
 
 		int convertedValue = (int)(uvValue + 0.5);
 
-		char test[15];
+		char test[7];
 		char* newValue;
 
 		if(convertedValue  == UVIndexValue[i]){
@@ -66,9 +66,11 @@ char* UVIndexData::getMinutes(float uvValue){
 			int stringSize = sizeof(MSDAlwaysValue[i]);
 
 			MSDAlwaysValue[i].toCharArray(test, stringSize);
-			delay(100);
-			newValue = test;
 			
+			newValue = test;
+
+			Serial.print("Value: ");
+			Serial.println(newValue);
 			return newValue;
 
 
