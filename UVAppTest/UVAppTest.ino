@@ -42,7 +42,6 @@ void loop() {
 
     collectUVData(); 
 
-
   	delay(100);
 }
 
@@ -64,8 +63,8 @@ void collectUVData(){
       if(i == TABEL_LENGTH ){
 
         i=0;  
-        float calcAvgUvInte =  calculateAverageUVIntensety(uvItensityValues);
-        displayFinalUVItensety(calcAvgUvInte);
+        float calcAvgUvItensity =  calculateAverageUVIntensety(uvItensityValues);
+        displayFinalUVItensety(calcAvgUvItensity);
       }
     } 
 }
@@ -73,7 +72,6 @@ void collectUVData(){
 //Regner ut gjennomsnittet til en tabell
 //Denne function kan settes i en egen classe
 float calculateAverageUVIntensety(float values[]){
-
 
     displayCalculatingToDisplay();
     float value = 0;
@@ -93,33 +91,27 @@ float calculateAverageUVIntensety(float values[]){
 ///////////////////////////////////////////////////////////////
 //Denne klassen kan inneholde alle print/text/display visninger
 
-
 void displayCalculatingToDisplay(){
-
 
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Calculating..");
     delay(300);
-
 }
 
 
 //Sett I egen klasse
-void displayFinalUVItensety(float uvItensity){
+void displayFinalUVItensety(char uvItensity){
+
+    char *pointerMSDValue;
+    pointerMSDValue = uvData.getMinutes(uvItensity);
 
     lcd.clear();
-
     lcd.setCursor(0,0);
-    lcd.print("Value: ");
-    lcd.setCursor(6,0);
+    lcd.print("MSD: ");
+    lcd.setCursor(4,0);
+    lcd.print(pointerMSDValue);
 
-    char* testChar;
-    testChar = uvData.getMinutes(1);
-    
-    //for(int i = 0; i < 6; i++){
-      lcd.print(testChar);///får ikke overfør hele stringen
-    //}
 }
 
 void displayFinalMSD(float msd){
@@ -134,9 +126,10 @@ void displayFinalMSD(float msd){
 
 //Sett i egen klasse
 void displayCountdownInSec(int startSec, int remianingSec){
+  
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("Collection data....");
+  lcd.print("Collecting data....");
   lcd.setCursor(0,1);
   lcd.print("Waiting: ");
   lcd.setCursor(8,1);

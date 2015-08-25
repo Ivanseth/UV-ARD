@@ -9,6 +9,9 @@
 
 const int UV_INDEX_ARRAY = 12;
 const int MSD_ARRAY = 12; 
+const int MAX_STRING_SIZE = 10;
+
+char finalMSDValue[MAX_STRING_SIZE]; //This will contain MSD value to be send to appliation
 
 String MSDAlwaysValue[MSD_ARRAY] = {
 "70-120",
@@ -52,31 +55,43 @@ UVIndexData::UVIndexData(){
 //Her kan man også lage en parameter for hud type: skinType: set char *MSD[]
 char* UVIndexData::getMinutes(float uvValue){
 
+	char* pointerOfResult;
+	int convertedValue = (int)(uvValue + 0.5);
+
+	if(convertedValue > 0){
 	for(int i = 0; i < UV_INDEX_ARRAY; i++){
 
-		int convertedValue = (int)(uvValue + 0.5);
-
-		char test[7];
-		char* newValue;
-
+		
+		Serial.print("raw value: ");
+		Serial.print(uvValue);
+		Serial.print(" Value: ");
+		Serial.println(convertedValue);
 		if(convertedValue  == UVIndexValue[i]){
 		 	
-		 	
-
 			int stringSize = sizeof(MSDAlwaysValue[i]);
-
-			MSDAlwaysValue[i].toCharArray(test, stringSize);
+			stringToCharArray(i,stringSize);
 			
-			newValue = test;
+			pointerOfResult = finalMSDValue;
 
-			Serial.print("Value: ");
-			Serial.println(newValue);
-			return newValue;
-
-
-			
-			
+			//Serial.print("Value: ");
+			//Serial.println(finalMSDValue);
+			return pointerOfResult;	
+			}
 		}
+	}else{
+		return "?????";
+	}
+}
+
+
+
+void UVIndexData::stringToCharArray(int index, int stringSize){
+
+	String value = MSDAlwaysValue[index];
+
+	for(int i = 0; i < stringSize; i++){
+
+		finalMSDValue[i] = value.charAt(i);
 	}
 }
 
