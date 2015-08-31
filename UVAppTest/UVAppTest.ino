@@ -1,7 +1,11 @@
 #include <UVIndexData.h>
 #include <UVsensor.h>
 #include <LiquidCrystal.h>
+#include "ColorSensor.h"
 
+
+#include "Wire.h"
+#include "Adafruit_TCS34725.h"
 
 LiquidCrystal lcd(8,9,4,5,6,7);
 
@@ -12,14 +16,18 @@ const int UVOUT = A0; //Output from the sensor
 const int REF_3v3 = A1;	//3.3V power on the arduino
 const int pushButton = 2;
 
+//Classe´s
 UVsensor UVsensor(UVOUT, REF_3v3);
 UVIndexData uvData;
+ColorSensor colorSeneor;
+
+
 
 
 void setup() {
   Serial.begin(9600);
   lcd.begin(16,2);
-
+  colorSeneor.initializedColorSensor();
   pinMode(pushButton, INPUT);
 
   lcd.setCursor(0,0);
@@ -41,6 +49,7 @@ void loop() {
     lcd.print(uvValue); 
 
     collectUVData(); 
+    colorSeneor.getSkinColor();
 
   	delay(100);
 }
